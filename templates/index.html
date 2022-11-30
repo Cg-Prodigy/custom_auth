@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Home Page{% endblock title %}
+{% block content %}
+<nav class="nav">
+    {% if request.user.is_authenticated %}
+    <p> Hello, {{request.user}}.</p>
+    <a class="nav-link" href="{% url 'signout' %}">Sign Out</a>
+    {% else %}
+    <a class="nav-link" href="{% url 'login' %}">Login</a>
+    <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+    {% endif %}
+</nav>
+<div class="main">
+    <h2>Welcome to RentWithin</h2>
+</div>
+{% endblock content %}
