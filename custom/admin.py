@@ -21,7 +21,7 @@ class UserCreationForm(forms.ModelForm):
         pswd1=self.cleaned_data.get("password1")
         pswd2=self.cleaned_data.get("password2")
         if pswd1 and pswd2 and pswd1!=pswd2:
-            raise ValidationError("Password mismatch")
+            self.add_error(pswd2,"Password mismatch")
         return pswd2
     def save(self, commit=True):
         user=super().save(commit=False)
@@ -42,6 +42,12 @@ class UserAdmin(BaseUserAdmin):
 
     list_display=("nat_id","first_name","last_name","email","dob")
     list_filter=("is_admin",)
+    fieldsets=(
+        ("Personal Info",{"fields":("first_name","last_name")}),
+        ("Legal Info",{"fields":("nat_id","dob")}),
+        ("Permissions",{"fields":("is_admin",)}),
+        ("User type",{"fields":("user_type",)}),
+    )
     add_fieldsets=(
         (None,{
             "classes":("wide",),

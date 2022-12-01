@@ -1,7 +1,11 @@
+import re
+from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth import login,logout,authenticate
 from .forms import RentUserForm
+from .models import RentUser
+
 # Create your views here.
 
 def homePage(request):
@@ -35,3 +39,9 @@ def loginPage(request):
 def logoutUser(request):
     logout(request)
     return redirect("homepage")
+
+
+# htmx
+
+def validate_input(request):
+    print("Working")

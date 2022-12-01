@@ -8,13 +8,53 @@
         <div class="col">
             <form method="POST">
                 {% csrf_token %}
-                {% for field in form %}
                 <div class="mb-3">
-                    <label class="form-label">{{ field.label_tag}}</label>
-                    {% render_field field class="form-control"%}
-                    {{ field.errors }}
+                    <label for="nat_id" class="form-label">National ID</label>
+                    {% render_field form.nat_id class="form-control" id="nat_id" hx-post="/validate_input/" hx-target="#id_feedback" hx-trigger="focusout delay:.01s" %}
+                    <div class="form-text" id="id_feedback"></div>
                 </div>
-                {% endfor %}
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">First Name</label>
+                    {% render_field form.first_name class="form-control" id="first_name" hx-post="/validate_input/" hx-target="#f_feedback" hx-trigger="focusout delay:.01s" %}
+                    <div class="form-text" id="f_feedback"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    {% render_field form.last_name class="form-control" id="last_name" hx-post="/validate_input/" hx-target="#l_feedback" hx-trigger="focusout delay:.01s" %}
+                    <div class="form-text" id="l_feedback"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    {% render_field form.email class="form-control" id="email" hx-post="/validate_input/" hx-target="#e_feedback" hx-trigger="focusout delay:.01s" %}
+                    <div class="form-text" id="e_feedback"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="dob" class="form-label">Date of Birth</label>
+                    {% render_field form.dob class="form-control" id="dob" hx-post="/validate_input/" hx-target="#dob_feedback" hx-trigger="focusout delay:.01s" %}
+                    <div class="form-text" id="dob_feedback"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="user_type" class="form-label">User Type</label>
+                    {% render_field form.user_type class="form-control" id="user_type" hx-post="/validate_input/" hx-target="#u_feedback" hx-trigger="focusout delay:.01s" %}
+                    <div class="form-text" id="u_feedback"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="pswd" class="form-label">Password</label>
+                    {% render_field form.password1 class="form-control" id="pswd" hx-post="/validate_input/" hx-target="#pswd1_feedback" hx-trigger="focusout delay:.01s" %}
+                    <div class="form-text" id="pswd1_feedback">
+                        <ul>
+                            <li>Should have atleast one number.</li>
+                            <li>Should have atleast one uppercase and one lowercase.</li>
+                            <li>Should have atlease one special symbol.</li>
+                            <li>Should be between 8 to 15 characters long.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="c_pswd" class="form-label">Confirm Password</label>
+                    {% render_field form.password2 class="form-control" id="c_pswd" hx-post="/validate_input/" hx-target="#pswd2_feedback" hx-trigger="focusout delay:.01s" %}
+                    <div class="form-text" id="pswd2_feedback"></div>
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
