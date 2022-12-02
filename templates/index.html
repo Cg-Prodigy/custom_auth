@@ -3,7 +3,10 @@
 {% block content %}
 <nav class="nav">
     {% if request.user.is_authenticated %}
-    <p> Hello, {{request.user}}.</p>
+    <p class="nav-link"> Hello, {{request.user}}.</p>
+    {% if request.user.user_type == "LD" %}
+        <a class="nav-link" href={% url 'house_reg' %}>Register New House</a>
+    {% endif %}
     <a class="nav-link" href="{% url 'signout' %}">Sign Out</a>
     {% else %}
     <a class="nav-link" href="{% url 'login' %}">Login</a>
@@ -12,5 +15,18 @@
 </nav>
 <div class="main">
     <h2>Welcome to RentWithin</h2>
+    {% for house in houses %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{house.house_name}}</h5>
+            <ul class="card-text">
+                <li>{{house.house_location}}</li>
+                <li>{{house.rent_per_month}}</li>
+                <li>{{house.get_house_type_display}}</li>
+            </ul>
+            <a href="house_details/{{house.id}}/" class="btn btn-primary">More details</a>
+        </div>
+    </div>
+    {% endfor %}
 </div>
 {% endblock content %}

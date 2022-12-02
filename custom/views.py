@@ -1,15 +1,15 @@
-import re
 from django.http import HttpResponse
-from django.shortcuts import render,redirect
+from django.contrib import messages
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login,logout,authenticate
-from .forms import RentUserForm
-from .models import RentUser
-
+from .forms import RentUserForm,HouseForm
+from .models import HouseModel
 # Create your views here.
 
 def homePage(request):
-    return render(request,"index.html")
+    houses=HouseModel.objects.all()
+    return render(request,"index.html",{"houses":houses})
 
 def signUpPage(request):
     if request.method=="POST":
@@ -40,8 +40,25 @@ def logoutUser(request):
     logout(request)
     return redirect("homepage")
 
+def houseView(request):
+    if request.method=="POST":
+        form=HouseForm(request.POST)
+        if form.is_valid():
+            house=form.cleaned_data["house_name"]
+            form=form.save(commit=False)
+            form.landlord=request.user
+            form.save()
+            messages.success(request,f"{house} has been registered successfully")
+            return redirect("house_reg")
+    else:
+        form=HouseForm()
+    return render(request,"custom/house.html",{"form":form})
 
+def houseDetails(request,pk):
+    house=get_object_or_404(HouseModel,id=pk)
+    return render(request,"custom/house_det.html",{"house":house})
 # htmx
 
 def validate_input(request):
-    print("Working")
+    return HttpResponse(None)
+    

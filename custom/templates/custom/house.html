@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block title %}Register your house{% endblock title %}
+{% block content %}
+<nav class="nav">
+    <p class="nav-link">Hello, {{request.user}}</p>
+    <a href="{% url 'homepage' %}" class="nav-link">Home</a>
+</nav>
+<div class="container-fluid">
+    {% for message in messages %}
+    <p>{{message}}</p>
+    {% endfor %}
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="mb-3">
+            <label class="form-label">{% render_field field.label_tag %}</label>
+            {% render_field field class="form-control" %}
+            {% render_field field.errors class="form-text" %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-success">Register House</button>
+    </form>
+</div>
+{% endblock content %}

@@ -14,11 +14,11 @@
                 {% csrf_token %}
                 <div class="mb-3">
                   <label for="nat_id" class="form-label">National ID</label>
-                  <input type="text" class="form-control" id="nat_id" name="nat_id">
+                  <input type="text" class="form-control" id="nat_id" name="nat_id" required>
                 </div>
                 <div class="mb-3">
                   <label for="pswd" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="pswd" name="password">
+                  <input type="password" class="form-control" id="pswd" name="password" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>

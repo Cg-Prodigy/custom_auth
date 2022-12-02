@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 
-from .models import RentUser
+from .models import RentUser,HouseModel
 # Register your models here.
 
 class UserCreationForm(forms.ModelForm):
@@ -60,3 +60,10 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(RentUser,UserAdmin)
 admin.site.unregister(Group)
+@admin.register(HouseModel)
+class HomeAdmin(admin.ModelAdmin):
+    list_display=['house_name',"house_location","house_type","rent_per_month"]
+    fieldsets=(
+        ("Landlord",{"fields":("landlord",)}),
+        ("House Details",{"fields":("house_name","house_location","house_type","rent_per_month")})
+    )

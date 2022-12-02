@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import BaseUserManager,AbstractBaseUser
 # Create your models here.
 class UserManager(BaseUserManager):
@@ -37,6 +38,7 @@ class RentUser(AbstractBaseUser):
     first_name=models.CharField(max_length=20)
     last_name=models.CharField(max_length=20)
     email=models.EmailField(verbose_name="Email Address",unique=True)
+    phone_number=models.CharField(max_length=12, null=True)
     nat_id=models.CharField(max_length=8,unique=True)
     dob=models.DateField(verbose_name="Date of Birth")
     user_type=models.CharField(choices=USER_TYPE,max_length=8)
@@ -56,3 +58,21 @@ class RentUser(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+
+    
+# support models
+
+class HouseModel(models.Model):
+    HOUSE_TYPE=(
+        ("BD","BedSitter"),
+        ("OB","One Bedroom"),
+        ("TB","Two Bedroom"),
+        ("THD","Three Bedroom"),
+        ("CM","Commercial"),
+        ("GH","Guest House"),
+    )
+    house_name=models.CharField(max_length=30)
+    house_location=models.CharField(max_length=20)
+    rent_per_month=models.CharField(max_length=10)
+    house_type=models.CharField(choices=HOUSE_TYPE,default="BedSitter",max_length=15)
+    landlord=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
